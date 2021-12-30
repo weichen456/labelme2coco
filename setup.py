@@ -39,7 +39,7 @@ setuptools.setup(
         "Operating System :: OS Independent",
     ],
     install_requires=get_requirements(),
-    python_requires=">=3.5",
+    python_requires=">=3.7",
     entry_points={
         "console_scripts": [
             "labelme2coco=labelme2coco.cli:app",
