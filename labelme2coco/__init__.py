@@ -41,6 +41,6 @@ def convert(
         save_json(result["val_coco"].json, save_path)
         logger.info(f"Validation split in COCO format is exported to {save_path}")
     else:
-        save_path = str(Path(export_dir) / "train.json")
+        save_path = str(Path(export_dir) / "dataset.json")
         save_json(coco.json, save_path)
         logger.info(f"Converted annotations in COCO format is exported to {save_path}")
