@@ -1,2 +1,2 @@
-sahi==0.8.16
+sahi>=0.8.19
 jsonschema>=2.6.0
