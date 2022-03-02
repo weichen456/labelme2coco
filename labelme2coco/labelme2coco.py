@@ -26,7 +26,8 @@ def get_coco_from_labelme_folder(
     # get json list
     _, abs_json_path_list = list_files_recursively(labelme_folder, contains=[".json"])
     labelme_json_list = abs_json_path_list
-
+    object_counts = 0
+    small_objects = 0
     # init coco object
     coco = Coco()
 
@@ -48,6 +49,8 @@ def get_coco_from_labelme_folder(
         for shape in data["shapes"]:
             # set category name and id
             category_name = shape["label"]
+            if category_name=='pedestrian':
+                category_name='people'
             category_id = None
             for (
                 coco_category_id,
@@ -67,6 +70,9 @@ def get_coco_from_labelme_folder(
                 y1 = shape["points"][0][1]
                 x2 = shape["points"][1][0]
                 y2 = shape["points"][1][1]
+                object_counts+=1
+                if (x2-x1)*(y2-y1)<32*32:
+                    small_objects+=1
                 coco_annotation = CocoAnnotation(
                     bbox=[x1, y1, x2 - x1, y2 - y1],
                     category_id=category_id,
@@ -85,6 +91,7 @@ def get_coco_from_labelme_folder(
                 )
             coco_image.add_annotation(coco_annotation)
         coco.add_image(coco_image)
+        print('total objects: '，object_counts,'small objects:',small_objects)
 
     return coco
 
